@@ -1,23 +1,19 @@
 package sapegin.anton.diceandcoin.activity
 
+import android.content.Context
 import android.content.Intent
-import android.content.res.Resources.Theme
-import android.graphics.drawable.Drawable
-import android.os.Build
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
-import androidx.annotation.RequiresApi
 import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import sapegin.anton.diceandcoin.dictionaries.DiceActivityDictionary
 import sapegin.anton.diceandcoin.R
 import sapegin.anton.diceandcoin.adapters.DiceAdapter
 import sapegin.anton.diceandcoin.databinding.ActivityMainBinding
-import sapegin.anton.diceandcoin.dictionaries.StyleSettingsDictionary
 import sapegin.anton.diceandcoin.models.Dice
-import sapegin.anton.diceandcoin.models.StyleSettings
 import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
@@ -28,15 +24,22 @@ class MainActivity : AppCompatActivity() {
     private var diceNum = 1
     private var needToCombine = false
     private var needToSort = false
-    private var style = R.style.Theme_DiceAndCoin
+    private lateinit var preferences: SharedPreferences
 
-
-    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
+        preferences = getSharedPreferences("settings", Context.MODE_PRIVATE)
+        if (preferences.contains(DiceActivityDictionary.SAVED_SETTINGS)) {
+            setTheme(
+                preferences.getInt(
+                    DiceActivityDictionary.SAVED_SETTINGS,
+                    R.style.Theme_DiceAndCoin
+                )
+            )
+        }
+
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        //changeStyle(style)
         binding.apply {
             result.adapter = adapter
             sort.setOnCheckedChangeListener { buttonView, isChecked -> needToSort = isChecked }
@@ -61,16 +64,21 @@ class MainActivity : AppCompatActivity() {
             clearResult.setOnClickListener {
                 adapter.clearResult()
             }
-            toolbar.findViewById<View>(R.id.global_settings_button).setOnClickListener {
+            globalSettingsButton.setOnClickListener {
                 val intent = Intent(this@MainActivity, TableSetting::class.java)
                 startActivity(intent)
+            }
+            throwDice.setOnClickListener {
+                onClickThrow()
             }
         }
     }
 
-    fun onClickThrow(view: View) {
-        style = R.style.Theme_DiceAndCoin2
-        recreate()
+    fun onClickThrow() {
+        /*preferences.edit().putInt(DiceActivityDictionary.SAVED_SETTINGS, R.style.Theme_DiceAndCoin2)
+            .apply()
+        recreate()*/
+
         diceNum =
             if (binding.numOfDice.text.toString().isNotEmpty()) binding.numOfDice.text.toString()
                 .toInt() else 1
@@ -163,18 +171,6 @@ class MainActivity : AppCompatActivity() {
                 else -> 6
             }
         return columnNumbs
-    }
-
-    @RequiresApi(Build.VERSION_CODES.M)
-    private fun changeStyle(styleSettings: StyleSettings) {
-        binding.apply {
-            basicLayout.setBackgroundResource(styleSettings.backgroundLinc)
-            leftMenu.setBackgroundResource(styleSettings.backgroundLinc)
-            throwDice.setBackgroundResource(styleSettings.buttonDraw)
-            throwDice.setTextAppearance(styleSettings.textStyle)
-            settingsButton.setBackgroundResource(R.drawable.settings_button_for_green_grace)
-            toolbar.setBackgroundColor(getColor(R.color.for_button_for_white_wood_a))
-        }
     }
 }
 

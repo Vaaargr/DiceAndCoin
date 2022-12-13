@@ -19,6 +19,7 @@
         >
 
         <View
+            android:id="@+id/view3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/corner"
@@ -26,16 +27,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:minHeight="?attr/actionBarSize"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:menu="@menu/toolbar_menu" />
 
         <Button
             android:id="@+id/throw_dice"
@@ -46,26 +37,24 @@
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="12dp"
             android:background="@drawable/button_for_green_wood"
-            android:onClick="onClickThrow"
             android:text="@string/throw_dice"
             android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/settings_button"
-            app:layout_constraintStart_toEndOf="@+id/clear_result"
-            app:layout_constraintTop_toBottomOf="@+id/result" />
+            app:layout_constraintStart_toEndOf="@+id/clear_result" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/result"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
+            android:background="@color/none"
             app:layout_constraintBottom_toTopOf="@+id/throw_dice"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/settings_button"
@@ -75,7 +64,6 @@
             android:background="@drawable/ic_baseline_settings_24"
             app:layout_constraintBottom_toBottomOf="@+id/throw_dice"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/throw_dice"
             tools:ignore="SpeakableTextPresentCheck" />
 
         <Button
@@ -89,6 +77,18 @@
             app:layout_constraintTop_toTopOf="@+id/throw_dice"
             tools:ignore="SpeakableTextPresentCheck" />
 
+        <Button
+            android:id="@+id/global_settings_button"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/ic_baseline_app_settings_alt_24"
+            android:contentDescription="@string/none"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="SpeakableTextPresentCheck" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -99,13 +99,12 @@
 
         <TextView
             android:id="@+id/textView"
-            style="@style/TextForGreenGrace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="@string/settings"
             android:textAllCaps="true"
-            android:textColor="@color/black"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="34sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -118,7 +117,6 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="16dp"
             android:text="@string/dice_type"
-            android:textColor="@color/black"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -145,7 +143,6 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:text="@string/num_of_dice"
-            android:textColor="@color/black"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
@@ -166,7 +163,8 @@
             app:layout_constraintBottom_toBottomOf="@+id/textView3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView3"
-            app:layout_constraintTop_toTopOf="@+id/textView3" />
+            app:layout_constraintTop_toTopOf="@+id/textView3"
+            android:importantForAutofill="no" />
 
         <TextView
             android:id="@+id/textView4"
@@ -175,7 +173,6 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:text="@string/sort"
-            android:textColor="@color/black"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
@@ -187,7 +184,6 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:text="@string/combine"
-            android:textColor="@color/black"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
