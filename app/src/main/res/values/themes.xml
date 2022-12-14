@@ -1,10 +1,10 @@
 <resources >
     <!-- Base application theme. -->
-    <style name="Theme.DiceAndCoin" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.DiceAndCoinBasic" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/for_button_for_wood</item>
+        <item name="colorPrimary">@color/primary_for_green_grace</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnPrimary">@color/on_primary_for_green_grace</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_700</item>
@@ -13,30 +13,78 @@
         <!-- Customize your theme here. -->
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
-        <item name="android:background">@drawable/green_wood</item>
+        <item name="android:background">@drawable/green_grace</item>
         <item name="android:textViewStyle">@style/TextForGreenGrace</item>
+        <item name="textAppearanceButton">@style/TextForGreenGrace</item>
     </style>
 
-    <style name="Theme.DiceAndCoin2" parent="Theme.DiceAndCoin">
-        <item name="colorPrimary">@color/for_button_for_squares</item>
+    <style name="Theme.ForGreenWood" parent="Theme.DiceAndCoinBasic">
+        <item name="colorPrimary">@color/primary_for_green_wood</item>
+        <item name="colorOnPrimary">@color/on_primary_for_green_wood</item>
+        <item name="android:background">@drawable/green_wood</item>
+        <item name="android:textViewStyle">@style/TextForGreenWood</item>
+        <item name="textAppearanceButton">@style/TextForGreenWood</item>
+    </style>
+
+    <style name="Theme.ForPlitka" parent="Theme.DiceAndCoinBasic">
+        <item name="colorPrimary">@color/primary_for_plitka</item>
+        <item name="colorOnPrimary">@color/on_primary_for_plitka</item>
+        <item name="android:background">@drawable/plitka</item>
+        <item name="android:textViewStyle">@style/TextForPlitka</item>
+        <item name="textAppearanceButton">@style/TextForPlitka</item>
+    </style>
+
+    <style name="Theme.ForSquares" parent="Theme.DiceAndCoinBasic">
+        <item name="colorPrimary">@color/primary_for_squares</item>
+        <item name="colorOnPrimary">@color/on_primary_for_squares</item>
         <item name="android:background">@drawable/squares</item>
+        <item name="android:textViewStyle">@style/TextForSquares</item>
+        <item name="textAppearanceButton">@style/TextForSquares</item>
     </style>
 
-    <style name="BaseStyle" parent="Theme.AppCompat">
-        <item name="windowNoTitle">true</item>
-        <item name="android:windowFullscreen">true</item>
-        <item name="background">@color/none</item>
-        <item name="colorPrimary">@color/text_for_wood</item>
+    <style name="Theme.ForTextaile" parent="Theme.DiceAndCoinBasic">
+        <item name="colorPrimary">@color/primary_for_textaile</item>
+        <item name="colorOnPrimary">@color/on_primary_for_textaile</item>
+        <item name="android:background">@drawable/textaile</item>
+        <item name="android:textViewStyle">@style/TextForTextaile</item>
+        <item name="textAppearanceButton">@style/TextForTextaile</item>
+    </style>
+
+    <style name="Theme.ForWhiteWoodA" parent="Theme.DiceAndCoinBasic">
+        <item name="colorPrimary">@color/primary_for_white_wood_a</item>
+        <item name="colorOnPrimary">@color/on_primary_for_white_wood_a</item>
+        <item name="android:background">@drawable/white_wood_a</item>
+        <item name="android:textViewStyle">@style/TextForWhiteWoodA</item>
+        <item name="textAppearanceButton">@style/TextForWhiteWoodA</item>
+    </style>
+
+    <style name="Theme.ForWhiteWoodB" parent="Theme.DiceAndCoinBasic">
+        <item name="colorPrimary">@color/primary_for_white_wood_b</item>
+        <item name="colorOnPrimary">@color/on_primary_for_white_wood_b</item>
+        <item name="android:background">@drawable/white_wood_b</item>
+        <item name="android:textViewStyle">@style/TextForWhiteWoodB</item>
+        <item name="textAppearanceButton">@style/TextForWhiteWoodB</item>
+    </style>
+
+    <style name="Theme.ForWhiteWoodC" parent="Theme.DiceAndCoinBasic">
+        <item name="colorPrimary">@color/primary_for_white_wood_c</item>
+        <item name="colorOnPrimary">@color/on_primary_for_white_wood_c</item>
+        <item name="android:background">@drawable/white_wood_c</item>
+        <item name="android:textViewStyle">@style/TextForWhiteWoodC</item>
+        <item name="textAppearanceButton">@style/TextForWhiteWoodC</item>
+    </style>
+
+    <style name="Theme.ForWood" parent="Theme.DiceAndCoinBasic">
+        <item name="colorPrimary">@color/primary_for_wood</item>
+        <item name="colorOnPrimary">@color/on_primary_for_wood</item>
+        <item name="android:background">@drawable/wood</item>
+        <item name="android:textViewStyle">@style/TextForWood</item>
+        <item name="textAppearanceButton">@style/TextForWood</item>
     </style>
 
     <style name="GlobalSettings" parent="Theme.AppCompat.Dialog">
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
-    </style>
-
-    <style name="Buttonst" parent="TextAppearance.AppCompat.Button">
-        <item name="background">@drawable/button_for_green_grace</item>
-        <item name="backgroundTint">@color/for_button_for_squares</item>
     </style>
 
 </resources>

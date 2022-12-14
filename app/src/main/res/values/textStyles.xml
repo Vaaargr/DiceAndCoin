@@ -2,48 +2,48 @@
 <resources>
 
     <style name="TextForGreenGrace">
-        <item name="android:textColor">@color/text_for_green_grace</item>
-        <item name="fontFamily">@font/aleo_light</item>
+        <item name="android:textColor">@color/on_primary_for_green_grace</item>
+        <item name="fontFamily">@font/aladin</item>
         <item name="android:background">@color/none</item>
     </style>
 
-    <style name="TextForGreenWood">
-        <item name="android:textColor">@color/text_for_green_wood</item>
+    <style name="TextForGreenWood" parent="TextForGreenGrace">
+        <item name="android:textColor">@color/on_primary_for_green_wood</item>
         <item name="fontFamily">@font/boogaloo</item>
     </style>
 
-    <style name="TextForPlitka">
-        <item name="android:textColor">@color/text_for_plitka</item>
+    <style name="TextForPlitka" parent="TextForGreenGrace">
+        <item name="android:textColor">@color/on_primary_for_plitka</item>
         <item name="fontFamily">@font/alegreya</item>
     </style>
 
-    <style name="TextForSquares">
-        <item name="android:textColor">@color/text_for_squares</item>
+    <style name="TextForSquares" parent="TextForGreenGrace">
+        <item name="android:textColor">@color/on_primary_for_squares</item>
         <item name="fontFamily">@font/chela_one</item>
     </style>
 
-    <style name="TextForTextaile">
-        <item name="android:textColor">@color/text_for_textaile</item>
+    <style name="TextForTextaile" parent="TextForGreenGrace">
+        <item name="android:textColor">@color/on_primary_for_textaile</item>
         <item name="fontFamily">@font/yusei_magic</item>
     </style>
 
-    <style name="TextForWhiteWoodA">
-        <item name="android:textColor">@color/text_for_white_wood_a</item>
+    <style name="TextForWhiteWoodA" parent="TextForGreenGrace">
+        <item name="android:textColor">@color/on_primary_for_white_wood_a</item>
         <item name="fontFamily">@font/aladin</item>
     </style>
 
-    <style name="TextForWhiteWoodB">
-        <item name="android:textColor">@color/text_for_white_wood_b</item>
+    <style name="TextForWhiteWoodB" parent="TextForGreenGrace">
+        <item name="android:textColor">@color/on_primary_for_white_wood_b</item>
         <item name="fontFamily">@font/mulish_bold</item>
     </style>
 
-    <style name="TextForWhiteWoodC">
-        <item name="android:textColor">@color/text_for_white_wood_c</item>
+    <style name="TextForWhiteWoodC" parent="TextForGreenGrace">
+        <item name="android:textColor">@color/on_primary_for_white_wood_c</item>
         <item name="fontFamily">@font/bubblegum_sans</item>
     </style>
 
-    <style name="TextForWood">
-        <item name="android:textColor">@color/text_for_wood</item>
+    <style name="TextForWood" parent="TextForGreenGrace">
+        <item name="android:textColor">@color/on_primary_for_wood</item>
         <item name="fontFamily">@font/nanum_gothic_bold</item>
     </style>
 </resources>

@@ -1,5 +1,8 @@
 package sapegin.anton.diceandcoin.activity
 
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -13,14 +16,17 @@ import sapegin.anton.diceandcoin.models.StyleSettings
 
 class TableSetting : AppCompatActivity(), StyleSettingsAdapter.BackgroundListener {
     lateinit var binding: ActivityTableSettingBinding
+    private lateinit var preferences: SharedPreferences
     private val adapter = StyleSettingsAdapter(this)
 
-
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
+        preferences = getSharedPreferences("settings", Context.MODE_PRIVATE)
         super.onCreate(savedInstanceState)
         binding = ActivityTableSettingBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        val position = intent.getIntExtra(StyleSettingsDictionary.STYLE_SETTINGS,0)
+        changeStyle(StyleSettingsDictionary.thems[position])
         binding.apply {
             styleChoose.adapter = adapter
             styleChoose.layoutManager = GridLayoutManager(this@TableSetting, 3)
@@ -31,15 +37,21 @@ class TableSetting : AppCompatActivity(), StyleSettingsAdapter.BackgroundListene
         }
     }
 
-
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onClick(styleSettings: StyleSettings) {
         binding.styleChoose.visibility = View.GONE
         changeStyle(styleSettings)
+        preferences.edit()
+            .putInt(StyleSettingsDictionary.STYLE_SETTINGS, styleSettings.position)
+            .apply()
+        val i = Intent()
+        i.putExtra(StyleSettingsDictionary.NEED_TO_RECREATE, true)
+        setResult(RESULT_OK, i)
+        finish()
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
-   private fun changeStyle(styleSettings: StyleSettings){
+    private fun changeStyle(styleSettings: StyleSettings) {
         binding.apply {
             settings.setBackgroundResource(styleSettings.backgroundLinc)
             settingsHeader.setTextAppearance(styleSettings.textStyle)

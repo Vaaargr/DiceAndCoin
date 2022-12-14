@@ -7,13 +7,18 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import sapegin.anton.diceandcoin.dictionaries.DiceActivityDictionary
 import sapegin.anton.diceandcoin.R
 import sapegin.anton.diceandcoin.adapters.DiceAdapter
 import sapegin.anton.diceandcoin.databinding.ActivityMainBinding
+import sapegin.anton.diceandcoin.dictionaries.StyleSettingsDictionary
 import sapegin.anton.diceandcoin.models.Dice
+import sapegin.anton.diceandcoin.models.StyleSettings
 import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
@@ -24,22 +29,37 @@ class MainActivity : AppCompatActivity() {
     private var diceNum = 1
     private var needToCombine = false
     private var needToSort = false
+    private var launcher: ActivityResultLauncher<Intent>? = null
+    private var styleSettingsPosition = 3
     private lateinit var preferences: SharedPreferences
+    private lateinit var styleSettings: StyleSettings
 
     override fun onCreate(savedInstanceState: Bundle?) {
         preferences = getSharedPreferences("settings", Context.MODE_PRIVATE)
-        if (preferences.contains(DiceActivityDictionary.SAVED_SETTINGS)) {
-            setTheme(
-                preferences.getInt(
-                    DiceActivityDictionary.SAVED_SETTINGS,
-                    R.style.Theme_DiceAndCoin
-                )
+        if (preferences.contains(StyleSettingsDictionary.STYLE_SETTINGS)) {
+            styleSettingsPosition = preferences.getInt(
+                StyleSettingsDictionary.STYLE_SETTINGS,
+                0
             )
+            styleSettings = StyleSettingsDictionary.thems[styleSettingsPosition]
+            setTheme(styleSettings.theme)
         }
-
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        launcher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+                if (result.resultCode == RESULT_OK) {
+                    if (result.data?.getBooleanExtra(
+                            StyleSettingsDictionary.NEED_TO_RECREATE,
+                            false
+                        ) == true
+                    )
+                        recreate()
+                }
+            }
+
         binding.apply {
             result.adapter = adapter
             sort.setOnCheckedChangeListener { buttonView, isChecked -> needToSort = isChecked }
@@ -66,7 +86,8 @@ class MainActivity : AppCompatActivity() {
             }
             globalSettingsButton.setOnClickListener {
                 val intent = Intent(this@MainActivity, TableSetting::class.java)
-                startActivity(intent)
+                intent.putExtra(StyleSettingsDictionary.STYLE_SETTINGS, styleSettingsPosition)
+                launcher?.launch(intent)
             }
             throwDice.setOnClickListener {
                 onClickThrow()
@@ -74,11 +95,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun onClickThrow() {
-        /*preferences.edit().putInt(DiceActivityDictionary.SAVED_SETTINGS, R.style.Theme_DiceAndCoin2)
-            .apply()
-        recreate()*/
-
+    private fun onClickThrow() {
         diceNum =
             if (binding.numOfDice.text.toString().isNotEmpty()) binding.numOfDice.text.toString()
                 .toInt() else 1

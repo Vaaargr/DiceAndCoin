@@ -9,7 +9,7 @@
             <shape android:shape="rectangle">
                 <corners android:radius="10dp"/>
                 <padding android:bottom="6dp"/>
-                <solid android:color="@color/for_button_for_textaile"/>
+                <solid android:color="@color/primary_for_textaile"/>
             </shape>
         </item>
     </ripple>

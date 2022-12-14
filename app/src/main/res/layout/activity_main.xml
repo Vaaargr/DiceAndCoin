@@ -30,15 +30,13 @@
 
         <Button
             android:id="@+id/throw_dice"
-            style="@style/Buttonst"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="12dp"
-            android:background="@drawable/button_for_green_wood"
+            android:background="@drawable/button"
             android:text="@string/throw_dice"
-            android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/settings_button"
