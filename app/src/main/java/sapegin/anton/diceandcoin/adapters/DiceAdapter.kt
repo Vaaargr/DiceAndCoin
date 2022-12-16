@@ -44,4 +44,8 @@ class DiceAdapter : RecyclerView.Adapter<DiceAdapter.DiceHolder>() {
         diceList.clear()
         notifyDataSetChanged()
     }
+
+    fun getDiceList(): ArrayList<Dice>{
+        return  diceList
+    }
 }

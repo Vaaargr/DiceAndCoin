@@ -1,3 +1,3 @@
 package sapegin.anton.diceandcoin.models
 
-class Dice(val diceImage: Int, val count: Int)
+class Dice(val diceImage: Int, val count: Int): java.io.Serializable

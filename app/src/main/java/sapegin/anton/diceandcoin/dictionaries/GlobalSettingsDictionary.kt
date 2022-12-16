@@ -3,8 +3,8 @@ package sapegin.anton.diceandcoin.dictionaries
 import sapegin.anton.diceandcoin.R
 import sapegin.anton.diceandcoin.models.StyleSettings
 
-object StyleSettingsDictionary {
-    var thems: Array<StyleSettings> = arrayOf(
+object GlobalSettingsDictionary {
+    var themes: Array<StyleSettings> = arrayOf(
         StyleSettings(
             R.drawable.green_wood,
             R.style.TextForGreenWood,
@@ -71,5 +71,5 @@ object StyleSettingsDictionary {
     )
 
     val STYLE_SETTINGS = "style settings"
-    val NEED_TO_RECREATE = "need to recreate"
+    val NEED_TO_CLEAN = "need to clean"
 }

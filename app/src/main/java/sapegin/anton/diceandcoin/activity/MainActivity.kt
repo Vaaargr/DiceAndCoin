@@ -7,16 +7,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import sapegin.anton.diceandcoin.dictionaries.DiceActivityDictionary
 import sapegin.anton.diceandcoin.R
 import sapegin.anton.diceandcoin.adapters.DiceAdapter
 import sapegin.anton.diceandcoin.databinding.ActivityMainBinding
-import sapegin.anton.diceandcoin.dictionaries.StyleSettingsDictionary
+import sapegin.anton.diceandcoin.dictionaries.GlobalSettingsDictionary
 import sapegin.anton.diceandcoin.models.Dice
 import sapegin.anton.diceandcoin.models.StyleSettings
 import kotlin.random.Random
@@ -29,39 +26,37 @@ class MainActivity : AppCompatActivity() {
     private var diceNum = 1
     private var needToCombine = false
     private var needToSort = false
-    private var launcher: ActivityResultLauncher<Intent>? = null
     private var styleSettingsPosition = 3
     private lateinit var preferences: SharedPreferences
     private lateinit var styleSettings: StyleSettings
+    private var needToAutoClean = false
+    private var columns = 1
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         preferences = getSharedPreferences("settings", Context.MODE_PRIVATE)
-        if (preferences.contains(StyleSettingsDictionary.STYLE_SETTINGS)) {
-            styleSettingsPosition = preferences.getInt(
-                StyleSettingsDictionary.STYLE_SETTINGS,
-                0
-            )
-            styleSettings = StyleSettingsDictionary.thems[styleSettingsPosition]
-            setTheme(styleSettings.theme)
-        }
+
+        styleSettingsPosition = preferences.getInt(GlobalSettingsDictionary.STYLE_SETTINGS, 0)
+        styleSettings = GlobalSettingsDictionary.themes[styleSettingsPosition]
+        setTheme(styleSettings.theme)
+        needToAutoClean = preferences.getBoolean(GlobalSettingsDictionary.NEED_TO_CLEAN, false)
+
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        launcher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-                if (result.resultCode == RESULT_OK) {
-                    if (result.data?.getBooleanExtra(
-                            StyleSettingsDictionary.NEED_TO_RECREATE,
-                            false
-                        ) == true
-                    )
-                        recreate()
-                }
+        binding.apply {
+            if (needToAutoClean) clearResult.visibility = View.GONE else clearResult.visibility =
+                View.VISIBLE
+            result.adapter = adapter
+
+            val needToLoad = intent.getBooleanExtra(DiceActivityDictionary.NEED_TO_LOAD, false)
+            if (needToLoad) {
+                columns = intent.getIntExtra(DiceActivityDictionary.COLUMNS, 1)
+                result.layoutManager = GridLayoutManager(this@MainActivity, columns)
+                adapter.addResults(intent.getSerializableExtra(DiceActivityDictionary.SAVED_RESULT) as ArrayList<Dice>)
             }
 
-        binding.apply {
-            result.adapter = adapter
             sort.setOnCheckedChangeListener { buttonView, isChecked -> needToSort = isChecked }
             combine.setOnCheckedChangeListener { buttonView, isChecked ->
                 needToCombine = isChecked
@@ -70,10 +65,7 @@ class MainActivity : AppCompatActivity() {
             diceType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
                 override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
+                    parent: AdapterView<*>?, view: View?, position: Int, id: Long
                 ) {
                     diceTypeNum = position
                 }
@@ -86,8 +78,9 @@ class MainActivity : AppCompatActivity() {
             }
             globalSettingsButton.setOnClickListener {
                 val intent = Intent(this@MainActivity, TableSetting::class.java)
-                intent.putExtra(StyleSettingsDictionary.STYLE_SETTINGS, styleSettingsPosition)
-                launcher?.launch(intent)
+                intent.putExtra(GlobalSettingsDictionary.STYLE_SETTINGS, styleSettingsPosition)
+                intent.putExtra(GlobalSettingsDictionary.NEED_TO_CLEAN, needToAutoClean)
+                startActivity(intent)
             }
             throwDice.setOnClickListener {
                 onClickThrow()
@@ -95,7 +88,24 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        if (preferences.getInt(
+                GlobalSettingsDictionary.STYLE_SETTINGS,
+                0
+            ) != styleSettingsPosition
+        ) {
+            val i = Intent(this, MainActivity::class.java)
+            i.putExtra(DiceActivityDictionary.SAVED_RESULT, adapter.getDiceList())
+            i.putExtra(DiceActivityDictionary.COLUMNS, columns)
+            i.putExtra(DiceActivityDictionary.NEED_TO_LOAD, true)
+            startActivity(i)
+        }
+
+        super.onResume()
+    }
+
     private fun onClickThrow() {
+        if (needToAutoClean) adapter.clearResult()
         diceNum =
             if (binding.numOfDice.text.toString().isNotEmpty()) binding.numOfDice.text.toString()
                 .toInt() else 1
@@ -178,16 +188,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getColumnNumbs(i: Int): Int {
-        val columnNumbs =
-            when (i) {
-                1 -> 1
-                in 2..4 -> 2
-                in 5..9 -> 3
-                in 10..16 -> 4
-                in 16..25 -> 5
-                else -> 6
-            }
+        val columnNumbs = when (i) {
+            1 -> 1
+            in 2..4 -> 2
+            in 5..9 -> 3
+            in 10..16 -> 4
+            in 16..25 -> 5
+            else -> 6
+        }
+        columns = columnNumbs
         return columnNumbs
     }
 }
-

@@ -1,7 +1,6 @@
 package sapegin.anton.diceandcoin.activity
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -11,7 +10,7 @@ import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.GridLayoutManager
 import sapegin.anton.diceandcoin.adapters.StyleSettingsAdapter
 import sapegin.anton.diceandcoin.databinding.ActivityTableSettingBinding
-import sapegin.anton.diceandcoin.dictionaries.StyleSettingsDictionary
+import sapegin.anton.diceandcoin.dictionaries.GlobalSettingsDictionary
 import sapegin.anton.diceandcoin.models.StyleSettings
 
 class TableSetting : AppCompatActivity(), StyleSettingsAdapter.BackgroundListener {
@@ -25,14 +24,20 @@ class TableSetting : AppCompatActivity(), StyleSettingsAdapter.BackgroundListene
         super.onCreate(savedInstanceState)
         binding = ActivityTableSettingBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val position = intent.getIntExtra(StyleSettingsDictionary.STYLE_SETTINGS,0)
-        changeStyle(StyleSettingsDictionary.thems[position])
+        val position = intent.getIntExtra(GlobalSettingsDictionary.STYLE_SETTINGS, 0)
+        changeStyle(GlobalSettingsDictionary.themes[position])
         binding.apply {
+            autoCleanSwitch.isChecked =
+                intent.getBooleanExtra(GlobalSettingsDictionary.NEED_TO_CLEAN, false)
             styleChoose.adapter = adapter
             styleChoose.layoutManager = GridLayoutManager(this@TableSetting, 3)
-            adapter.add(StyleSettingsDictionary.thems)
+            adapter.add(GlobalSettingsDictionary.themes)
             chouseBackgroundButton.setOnClickListener {
                 styleChoose.visibility = View.VISIBLE
+            }
+            autoCleanSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+                preferences.edit().putBoolean(GlobalSettingsDictionary.NEED_TO_CLEAN, isChecked)
+                    .apply()
             }
         }
     }
@@ -42,12 +47,8 @@ class TableSetting : AppCompatActivity(), StyleSettingsAdapter.BackgroundListene
         binding.styleChoose.visibility = View.GONE
         changeStyle(styleSettings)
         preferences.edit()
-            .putInt(StyleSettingsDictionary.STYLE_SETTINGS, styleSettings.position)
+            .putInt(GlobalSettingsDictionary.STYLE_SETTINGS, styleSettings.position)
             .apply()
-        val i = Intent()
-        i.putExtra(StyleSettingsDictionary.NEED_TO_RECREATE, true)
-        setResult(RESULT_OK, i)
-        finish()
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
