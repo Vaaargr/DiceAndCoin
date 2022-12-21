@@ -8,4 +8,5 @@ object DiceActivityDictionary {
     val SAVED_RESULT = "saved result"
     val COLUMNS = "number of columns"
     val NEED_TO_LOAD = "need to load"
+
 }

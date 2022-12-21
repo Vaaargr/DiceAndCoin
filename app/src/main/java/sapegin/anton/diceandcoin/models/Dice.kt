@@ -1,3 +1,5 @@
 package sapegin.anton.diceandcoin.models
 
-class Dice(val diceImage: Int, val count: Int): java.io.Serializable
+import android.graphics.drawable.Drawable
+
+class Dice(val diceImage: Drawable?, val count: Int): java.io.Serializable

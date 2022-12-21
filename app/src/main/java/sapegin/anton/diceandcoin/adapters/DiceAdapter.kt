@@ -1,9 +1,11 @@
 package sapegin.anton.diceandcoin.adapters
 
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import sapegin.anton.diceandcoin.R
 import sapegin.anton.diceandcoin.databinding.DiceResultBinding
 import sapegin.anton.diceandcoin.models.Dice
@@ -13,8 +15,14 @@ class DiceAdapter : RecyclerView.Adapter<DiceAdapter.DiceHolder>() {
 
     class DiceHolder(item: View) : RecyclerView.ViewHolder(item) {
         private val binding = DiceResultBinding.bind(item)
+
+
+
         fun bind(dice: Dice) = with(binding) {
-            diceResult.setImageResource(dice.diceImage)
+
+            /*Picasso.get().load("").error(R.drawable.six)
+                .into(diceResult)*/
+            diceResult.setImageDrawable(dice.diceImage)
             when (dice.count) {
                 0 -> diceCount.text = ""
                 else -> diceCount.text = dice.count.toString()
@@ -45,7 +53,7 @@ class DiceAdapter : RecyclerView.Adapter<DiceAdapter.DiceHolder>() {
         notifyDataSetChanged()
     }
 
-    fun getDiceList(): ArrayList<Dice>{
-        return  diceList
+    fun getDiceList(): ArrayList<Dice> {
+        return diceList
     }
 }
