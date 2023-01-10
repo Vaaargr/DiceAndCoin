@@ -4,17 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
-import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.CountDownTimer
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import sapegin.anton.diceandcoin.dictionaries.DiceActivityDictionary
-import sapegin.anton.diceandcoin.R
 import sapegin.anton.diceandcoin.adapters.DiceAdapter
 import sapegin.anton.diceandcoin.databinding.ActivityMainBinding
 import sapegin.anton.diceandcoin.dictionaries.GlobalSettingsDictionary
@@ -24,8 +20,6 @@ import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private var timer: CountDownTimer? = null
-    private var count = 0
     private val random = Random
     private val adapter = DiceAdapter()
     private var diceTypeNum = 2
@@ -37,7 +31,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var styleSettings: StyleSettings
     private var needToAutoClean = false
     private var columns = 1
-    var path = "/data/data/sapegin.anton.diceandcoin/files/wood.jpg"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         preferences = getSharedPreferences("settings", Context.MODE_PRIVATE)
@@ -91,8 +84,6 @@ class MainActivity : AppCompatActivity() {
             throwDice.setOnClickListener {
                 onClickThrow()
             }
-            textView6.text = path
-            //iAmAlive(1000000)
         }
     }
 
@@ -173,7 +164,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun makeDice(diceResult: Int, count: Int): Dice {
-        val diceImage = Drawable.createFromStream(assets.open("two.webp"), null)
+        val diceImage = Drawable.createFromStream(assets.open("black/D6/3.png"), null)
         /*when (diceTypeNum) {
         0 -> {
             when (diceResult) {
@@ -216,19 +207,5 @@ class MainActivity : AppCompatActivity() {
         }
         columns = columnNumbs
         return columnNumbs
-    }
-
-    private fun iAmAlive(time: Long) {
-        timer = object : CountDownTimer(time, 1000) {
-            override fun onTick(millisUntilFinished: Long) {
-                Log.d("MyLog", "I am alive $count")
-                count++
-            }
-
-            override fun onFinish() {
-                TODO("Not yet implemented")
-            }
-
-        }.start()
     }
 }
