@@ -3,32 +3,31 @@ package sapegin.anton.diceandcoin.activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
+import android.widget.EditText
 import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.GridLayoutManager
+import sapegin.anton.diceandcoin.R
 import sapegin.anton.diceandcoin.dictionaries.DiceActivityDictionary
 import sapegin.anton.diceandcoin.adapters.DiceAdapter
 import sapegin.anton.diceandcoin.databinding.ActivityMainBinding
 import sapegin.anton.diceandcoin.dictionaries.GlobalSettingsDictionary
 import sapegin.anton.diceandcoin.models.Dice
+import sapegin.anton.diceandcoin.models.DiceEngine
 import sapegin.anton.diceandcoin.models.StyleSettings
-import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private val random = Random
+    private lateinit var preferences: SharedPreferences
+    private lateinit var styleSettings: StyleSettings
     private val adapter = DiceAdapter()
     private var diceTypeNum = 2
-    private var diceNum = 1
     private var needToCombine = false
     private var needToSort = false
     private var styleSettingsPosition = 3
-    private lateinit var preferences: SharedPreferences
-    private lateinit var styleSettings: StyleSettings
     private var needToAutoClean = false
     private var columns = 1
 
@@ -114,25 +113,20 @@ class MainActivity : AppCompatActivity() {
 
     private fun onClickThrow() {
         if (needToAutoClean) adapter.clearResult()
-        diceNum =
+        val diceNumber =
             if (binding.numOfDice.text.toString().isNotEmpty()) binding.numOfDice.text.toString()
                 .toInt() else 1
-        val diceTypeArray = when (diceTypeNum) {
-            0 -> DiceActivityDictionary.COIN
-            1 -> DiceActivityDictionary.D4
-            2 -> DiceActivityDictionary.D6
-            else -> DiceActivityDictionary.D6
-        }
+        val engine = DiceEngine(diceTypeNum, diceNumber, needToSort, 1)
         val resultToShow = if (!needToCombine) {
-            makeDiceResultWithoutCombine(makeResult(diceTypeArray))
+            engine.makeDiceResultWithoutCombine()
         } else {
-            makeDiceResultCombine(makeResult(diceTypeArray), diceTypeArray.size)
+            engine.makeDiceResultCombine()
         }
         binding.result.layoutManager = GridLayoutManager(this, getColumnNumbs(resultToShow.size))
         adapter.addResults(resultToShow)
     }
 
-    private fun makeResult(diceTypeArray: IntArray): IntArray {
+    /*private fun makeResult(diceTypeArray: IntArray): IntArray {
         val currentDice = diceTypeArray.clone()
         val result = IntArray(diceNum)
         for (i in result.indices) {
@@ -140,32 +134,33 @@ class MainActivity : AppCompatActivity() {
             result[i] = currentDice[random.nextInt(0, currentDice.size - 1)]
         }
         return result
-    }
+    }*/
 
-    private fun makeDiceResultWithoutCombine(currentResult: IntArray): ArrayList<Dice> {
-        val finResult = ArrayList<Dice>()
-        if (needToSort) currentResult.sort()
-        currentResult.forEach {
-            finResult.add(makeDice(it, 0))
-        }
-        return finResult
-    }
+    /* private fun makeDiceResultWithoutCombine(currentResult: IntArray): ArrayList<Dice> {
+         val diceEngine = DiceEngine(3, 2, false, 2)
+         val finResult = ArrayList<Dice>()
+         if (needToSort) currentResult.sort()
+         currentResult.forEach {
+             finResult.add(diceEngine.makeDice(it,0))
+         }
+         return finResult
+     }*/
 
-    private fun makeDiceResultCombine(currentResult: IntArray, size: Int): ArrayList<Dice> {
-        val finResult = ArrayList<Dice>()
-        val res = IntArray(size)
-        currentResult.forEach { res[it - 1]++ }
-        for (i in res.indices) {
-            if (res[i] != 0) {
-                finResult.add(makeDice(i + 1, res[i]))
-            }
-        }
-        return finResult
-    }
+    /* private fun makeDiceResultCombine(currentResult: IntArray, size: Int): ArrayList<Dice> {
+         val finResult = ArrayList<Dice>()
+         val res = IntArray(size)
+         currentResult.forEach { res[it - 1]++ }
+         for (i in res.indices) {
+             if (res[i] != 0) {
+                 finResult.add(makeDice(i + 1, res[i]))
+             }
+         }
+         return finResult
+     }*/
 
-    private fun makeDice(diceResult: Int, count: Int): Dice {
+    /*private fun makeDice(diceResult: Int, count: Int): Dice {
         val diceImage = Drawable.createFromStream(assets.open("black/D6/3.png"), null)
-        /*when (diceTypeNum) {
+        *//*when (diceTypeNum) {
         0 -> {
             when (diceResult) {
                 1 -> R.drawable.avers
@@ -191,10 +186,10 @@ class MainActivity : AppCompatActivity() {
                 else -> R.drawable.six
             }
         }
-    }*/
+    }*//*
 
         return Dice(diceImage, count)
-    }
+    }*/
 
     private fun getColumnNumbs(i: Int): Int {
         val columnNumbs = when (i) {

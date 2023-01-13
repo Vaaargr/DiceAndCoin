@@ -6,7 +6,9 @@ object DiceActivityDictionary {
     val D6 = intArrayOf(1, 2, 3, 4, 5, 6)
 
     val DICE_TYPES =
-        arrayListOf("Coin", "D4", "D6", "D8", "D10", "D12", "D16", "D20", "D100")
+        arrayListOf("coin", "D4", "D6", "D8", "D10", "D12", "D16", "D20", "D100")
+
+    val DICE_COLOR = arrayListOf("black", "blue", "green", "pink", "red", "white", "yellow")
 
     val DICE_MAP = mapOf(
         DICE_TYPES[0] to intArrayOf(0, 1),
