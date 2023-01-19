@@ -13,9 +13,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 import sapegin.anton.diceandcoin.R
 import sapegin.anton.diceandcoin.dictionaries.DiceActivityDictionary
 import sapegin.anton.diceandcoin.adapters.DiceAdapter
+import sapegin.anton.diceandcoin.adapters.DiceColorAdapter
 import sapegin.anton.diceandcoin.databinding.ActivityMainBinding
 import sapegin.anton.diceandcoin.dictionaries.GlobalSettingsDictionary
 import sapegin.anton.diceandcoin.models.Dice
+import sapegin.anton.diceandcoin.models.DiceColor
 import sapegin.anton.diceandcoin.models.DiceEngine
 import sapegin.anton.diceandcoin.models.StyleSettings
 
@@ -24,12 +26,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var preferences: SharedPreferences
     private lateinit var styleSettings: StyleSettings
     private val adapter = DiceAdapter()
+    private val colorAdapter = DiceColorAdapter()
     private var diceTypeNum = 2
     private var needToCombine = false
     private var needToSort = false
     private var styleSettingsPosition = 3
     private var needToAutoClean = false
     private var columns = 1
+    private var currentDiceColor = DiceActivityDictionary.DICE_COLOR[0]
 
     override fun onCreate(savedInstanceState: Bundle?) {
         preferences = getSharedPreferences("settings", Context.MODE_PRIVATE)
@@ -46,7 +50,15 @@ class MainActivity : AppCompatActivity() {
         binding.apply {
             if (needToAutoClean) clearResult.visibility = View.GONE else clearResult.visibility =
                 View.VISIBLE
+
             result.adapter = adapter
+
+            colorChouse.adapter = colorAdapter
+            colorChouse.layoutManager = GridLayoutManager(
+                this@MainActivity,
+                getColumnNumbs(DiceActivityDictionary.DICE_COLOR.size)
+            )
+            colorAdapter.addResult(DiceActivityDictionary.DICE_COLOR)
 
             val needToLoad = intent.getBooleanExtra(DiceActivityDictionary.NEED_TO_LOAD, false)
             if (needToLoad) {
@@ -83,6 +95,9 @@ class MainActivity : AppCompatActivity() {
             throwDice.setOnClickListener {
                 onClickThrow()
             }
+            showColorsButton.setOnClickListener {
+                colorChouse.visibility = View.VISIBLE
+            }
         }
     }
 
@@ -116,7 +131,7 @@ class MainActivity : AppCompatActivity() {
         val diceNumber =
             if (binding.numOfDice.text.toString().isNotEmpty()) binding.numOfDice.text.toString()
                 .toInt() else 1
-        val engine = DiceEngine(diceTypeNum, diceNumber, needToSort, 1)
+        val engine = DiceEngine(diceTypeNum, diceNumber, needToSort, currentDiceColor.colorName)
         val resultToShow = if (!needToCombine) {
             engine.makeDiceResultWithoutCombine()
         } else {
@@ -125,71 +140,6 @@ class MainActivity : AppCompatActivity() {
         binding.result.layoutManager = GridLayoutManager(this, getColumnNumbs(resultToShow.size))
         adapter.addResults(resultToShow)
     }
-
-    /*private fun makeResult(diceTypeArray: IntArray): IntArray {
-        val currentDice = diceTypeArray.clone()
-        val result = IntArray(diceNum)
-        for (i in result.indices) {
-            currentDice.shuffle()
-            result[i] = currentDice[random.nextInt(0, currentDice.size - 1)]
-        }
-        return result
-    }*/
-
-    /* private fun makeDiceResultWithoutCombine(currentResult: IntArray): ArrayList<Dice> {
-         val diceEngine = DiceEngine(3, 2, false, 2)
-         val finResult = ArrayList<Dice>()
-         if (needToSort) currentResult.sort()
-         currentResult.forEach {
-             finResult.add(diceEngine.makeDice(it,0))
-         }
-         return finResult
-     }*/
-
-    /* private fun makeDiceResultCombine(currentResult: IntArray, size: Int): ArrayList<Dice> {
-         val finResult = ArrayList<Dice>()
-         val res = IntArray(size)
-         currentResult.forEach { res[it - 1]++ }
-         for (i in res.indices) {
-             if (res[i] != 0) {
-                 finResult.add(makeDice(i + 1, res[i]))
-             }
-         }
-         return finResult
-     }*/
-
-    /*private fun makeDice(diceResult: Int, count: Int): Dice {
-        val diceImage = Drawable.createFromStream(assets.open("black/D6/3.png"), null)
-        *//*when (diceTypeNum) {
-        0 -> {
-            when (diceResult) {
-                1 -> R.drawable.avers
-                2 -> R.drawable.revers
-                else -> R.drawable.ic_android_black_24dp
-            }
-        }
-        1 -> {
-            when (diceResult) {
-                1 -> R.drawable.one
-                2 -> R.drawable.two
-                3 -> R.drawable.three
-                else -> R.drawable.four
-            }
-        }
-        else -> {
-            when (diceResult) {
-                1 -> R.drawable.one
-                2 -> R.drawable.two
-                3 -> R.drawable.three
-                4 -> R.drawable.four
-                5 -> R.drawable.five
-                else -> R.drawable.six
-            }
-        }
-    }*//*
-
-        return Dice(diceImage, count)
-    }*/
 
     private fun getColumnNumbs(i: Int): Int {
         val columnNumbs = when (i) {

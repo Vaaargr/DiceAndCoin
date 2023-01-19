@@ -18,13 +18,12 @@ class DiceAdapter : RecyclerView.Adapter<DiceAdapter.DiceHolder>() {
 
 
         fun bind(dice: Dice) = with(binding) {
-            val path = "file:///android_asset/" + dice.diceImage
-            Picasso.get().load(path).error(R.drawable.six)
+            Picasso.get().load(dice.diceImage).error(R.drawable.six)
                 .into(diceResult)
-            //diceResult.setImageDrawable(dice.diceImage)
+            val countToShow = "X" + dice.count.toString()
             when (dice.count) {
-                0 -> diceCount.text = ""
-                else -> diceCount.text = dice.count.toString()
+                0 -> diceCount.visibility = View.INVISIBLE
+                else -> diceCount.text = countToShow
             }
         }
     }

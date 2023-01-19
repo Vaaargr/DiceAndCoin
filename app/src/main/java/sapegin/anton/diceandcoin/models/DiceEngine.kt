@@ -11,7 +11,7 @@ class DiceEngine(
     private val diceType: Int,
     private val numOfDice: Int,
     private val needToSort: Boolean,
-    private val color: Int
+    private val color: String
 ) {
 
     private fun makeResult(): IntArray {
@@ -27,9 +27,10 @@ class DiceEngine(
 
     private fun makeDice(diceResult: Int, count: Int): Dice {
         val path = if (diceType == 0) {
-            DICE_COLOR[color] + "/" + diceResult.toString() + ".png"
+            "file:///android_asset/$color/$diceResult.png"
         } else {
-            DICE_COLOR[color] + "/" + DICE_TYPES[diceType] + "/" + diceResult.toString() + ".png"
+            "file:///android_asset/" + color + "/" + DICE_TYPES[diceType] + "/" +
+                    diceResult.toString() + ".png"
         }
         return Dice(path, count)
     }

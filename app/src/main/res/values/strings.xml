@@ -18,6 +18,7 @@
     <string name="show">Show</string>
     <string name="none"> </string>
     <string name="cleanerText">Auto-clean table</string>
+    <string name="dice_color">Dice color</string>
     <string-array name="dice_values">
         <item>Coin</item>
         <item>D4</item>
@@ -27,7 +28,6 @@
         <item>D12</item>
         <item>D16</item>
         <item>D20</item>
-        <item>D100</item>
     </string-array>
 
 </resources>
