@@ -4,6 +4,7 @@ package sapegin.anton.diceandcoin.models
 import sapegin.anton.diceandcoin.dictionaries.DiceActivityDictionary.DICE_COLOR
 import sapegin.anton.diceandcoin.dictionaries.DiceActivityDictionary.DICE_MAP
 import sapegin.anton.diceandcoin.dictionaries.DiceActivityDictionary.DICE_TYPES
+import java.util.concurrent.ThreadLocalRandom
 import kotlin.random.Random
 
 
@@ -18,8 +19,8 @@ class DiceEngine(
         val result = IntArray(numOfDice)
         val currentDice = DICE_MAP[DICE_TYPES[diceType]]!!.clone()
         for (i in result.indices) {
-            currentDice.shuffle()
-            result[i] = currentDice[Random.nextInt(currentDice.size - 1)]
+            //0currentDice.shuffle()
+            result[i] = currentDice[(Math.random() * currentDice.size).toInt()]
         }
         if (needToSort) result.sort()
         return result

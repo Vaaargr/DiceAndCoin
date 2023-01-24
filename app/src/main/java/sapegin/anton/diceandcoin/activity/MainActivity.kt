@@ -3,6 +3,7 @@ package sapegin.anton.diceandcoin.activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -21,12 +22,12 @@ import sapegin.anton.diceandcoin.models.DiceColor
 import sapegin.anton.diceandcoin.models.DiceEngine
 import sapegin.anton.diceandcoin.models.StyleSettings
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), DiceColorAdapter.DiceColorListener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var preferences: SharedPreferences
     private lateinit var styleSettings: StyleSettings
     private val adapter = DiceAdapter()
-    private val colorAdapter = DiceColorAdapter()
+    private val colorAdapter = DiceColorAdapter(this)
     private var diceTypeNum = 2
     private var needToCombine = false
     private var needToSort = false
@@ -137,13 +138,22 @@ class MainActivity : AppCompatActivity() {
         } else {
             engine.makeDiceResultCombine()
         }
-        binding.result.layoutManager = GridLayoutManager(this, getColumnNumbs(resultToShow.size))
+        if (adapter.getDiceList().size < 1) {
+            binding.result.layoutManager =
+                GridLayoutManager(this, getColumnNumbs(resultToShow.size))
+        } else {
+            binding.result.layoutManager =
+                GridLayoutManager(
+                    this,
+                    getColumnNumbs(resultToShow.size + adapter.getDiceList().size)
+                )
+        }
         adapter.addResults(resultToShow)
     }
 
     private fun getColumnNumbs(i: Int): Int {
         val columnNumbs = when (i) {
-            1 -> 1
+            in 0..1 -> 1
             in 2..4 -> 2
             in 5..9 -> 3
             in 10..16 -> 4
@@ -152,5 +162,13 @@ class MainActivity : AppCompatActivity() {
         }
         columns = columnNumbs
         return columnNumbs
+    }
+
+    override fun onClick(diceColor: DiceColor) {
+        if (diceColor.colorName != "none") {
+            binding.colorChouse.visibility = View.GONE
+            currentDiceColor = diceColor
+            binding.showColorsButton.setBackgroundResource(diceColor.button)
+        }
     }
 }

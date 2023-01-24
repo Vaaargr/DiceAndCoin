@@ -22,15 +22,15 @@ object DiceActivityDictionary {
     )
 
     val DICE_COLOR = arrayListOf(
-        DiceColor("black", R.color.black),
-        DiceColor("white", R.color.white),
-        DiceColor("blue", R.color.blue),
-        DiceColor("green", R.color.green),
-        DiceColor("red", R.color.red),
-        DiceColor("yellow", R.color.yellow),
-        DiceColor("none", R.color.none),
-        DiceColor("pink", R.color.pink),
-        DiceColor("none", R.color.none)
+        DiceColor("black", R.color.black, R.drawable.button_color_black),
+        DiceColor("white", R.color.white,R.drawable.button_color_white),
+        DiceColor("blue", R.color.blue, R.drawable.button_color_blue),
+        DiceColor("green", R.color.green, R.drawable.button_color_green),
+        DiceColor("red", R.color.red, R.drawable.button_color_red),
+        DiceColor("yellow", R.color.yellow, R.drawable.button_color_yellow),
+        DiceColor("none", R.color.none, R.drawable.button_color_none),
+        DiceColor("pink", R.color.pink, R.drawable.button_color_pink),
+        DiceColor("none", R.color.none, R.drawable.button_color_none)
     )
 
     val SAVED_RESULT = "saved result"

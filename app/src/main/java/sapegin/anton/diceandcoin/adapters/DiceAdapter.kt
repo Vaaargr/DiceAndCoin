@@ -21,9 +21,10 @@ class DiceAdapter : RecyclerView.Adapter<DiceAdapter.DiceHolder>() {
             Picasso.get().load(dice.diceImage).error(R.drawable.six)
                 .into(diceResult)
             val countToShow = "X" + dice.count.toString()
-            when (dice.count) {
-                0 -> diceCount.visibility = View.INVISIBLE
-                else -> diceCount.text = countToShow
+            if (dice.count < 1) {
+                diceCount.visibility = View.GONE
+            } else {
+                diceCount.text = countToShow
             }
         }
     }

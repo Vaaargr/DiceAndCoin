@@ -49,11 +49,6 @@ class StyleSettingsAdapter(private val listener: BackgroundListener) : RecyclerV
         notifyDataSetChanged()
     }
 
-    fun clear() {
-        styleSettingsList.clear()
-        notifyDataSetChanged()
-    }
-
     interface BackgroundListener{
         fun onClick(styleSettings: StyleSettings)
     }

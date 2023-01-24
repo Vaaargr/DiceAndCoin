@@ -1,6 +1,5 @@
 package sapegin.anton.diceandcoin.adapters
 
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,14 +8,17 @@ import sapegin.anton.diceandcoin.R
 import sapegin.anton.diceandcoin.databinding.DiceColorBinding
 import sapegin.anton.diceandcoin.models.DiceColor
 
-class DiceColorAdapter : RecyclerView.Adapter<DiceColorAdapter.DiceColorViewHolder>() {
+class DiceColorAdapter(private val listener: DiceColorListener) : RecyclerView.Adapter<DiceColorAdapter.DiceColorViewHolder>() {
     private val colorsList = ArrayList<DiceColor>()
 
     class DiceColorViewHolder(item : View) : RecyclerView.ViewHolder(item){
         private val binding = DiceColorBinding.bind(item)
 
-        internal fun bind(diceColor: DiceColor) = with(binding){
+        internal fun bind(diceColor: DiceColor, listener: DiceColorListener) = with(binding){
             color.setBackgroundResource(diceColor.color)
+            itemView.setOnClickListener{
+                listener.onClick(diceColor)
+            }
         }
 
     }
@@ -27,7 +29,7 @@ class DiceColorAdapter : RecyclerView.Adapter<DiceColorAdapter.DiceColorViewHold
     }
 
     override fun onBindViewHolder(holder: DiceColorViewHolder, position: Int) {
-        holder.bind(colorsList[position])
+        holder.bind(colorsList[position], listener)
     }
 
     override fun getItemCount(): Int {
@@ -37,5 +39,9 @@ class DiceColorAdapter : RecyclerView.Adapter<DiceColorAdapter.DiceColorViewHold
     fun addResult(listToShow: ArrayList<DiceColor>){
         colorsList.addAll(listToShow)
         notifyDataSetChanged()
+    }
+
+    interface DiceColorListener{
+        fun onClick(diceColor: DiceColor)
     }
 }
