@@ -33,8 +33,8 @@ object DiceActivityDictionary {
         DiceColor("none", R.color.none, R.drawable.button_color_none)
     )
 
-    val SAVED_RESULT = "saved result"
-    val COLUMNS = "number of columns"
-    val NEED_TO_LOAD = "need to load"
+    const val SAVED_RESULT = "saved result"
+    const val COLUMNS = "number of columns"
+    const val NEED_TO_LOAD = "need to load"
 
 }

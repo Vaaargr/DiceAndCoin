@@ -28,7 +28,7 @@ class DiceEngine(
 
     private fun makeDice(diceResult: Int, count: Int): Dice {
         val path = if (diceType == 0) {
-            "file:///android_asset/$color/$diceResult.png"
+            "file:///android_asset/${DICE_TYPES[diceType]}/$diceResult.webp"
         } else {
             "file:///android_asset/" + color + "/" + DICE_TYPES[diceType] + "/" +
                     diceResult.toString() + ".png"

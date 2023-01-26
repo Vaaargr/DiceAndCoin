@@ -14,11 +14,10 @@
         android:adjustViewBounds="true"
         android:background="@color/none"
         android:contentDescription="@string/none"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/one" />
+        app:srcCompat="@drawable/six" />
 
     <TextView
         android:id="@+id/dice_count"
