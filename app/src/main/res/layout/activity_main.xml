@@ -15,7 +15,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/basic_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#4CAF50">
 
         <View
             android:id="@+id/view3"
@@ -96,7 +97,8 @@
         android:id="@+id/left_menu"
         android:layout_width="300dp"
         android:layout_height="match_parent"
-        android:layout_gravity="start">
+        android:layout_gravity="start"
+        android:background="#4CAF50">
 
         <TextView
             android:id="@+id/textView2"

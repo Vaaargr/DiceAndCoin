@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity(), DiceColorAdapter.DiceColorListener {
     private var currentDiceColor = DiceActivityDictionary.DICE_COLOR[0]
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        //Подготовка данных
         preferences = getSharedPreferences("settings", Context.MODE_PRIVATE)
 
         styleSettingsPosition = preferences.getInt(GlobalSettingsDictionary.STYLE_SETTINGS, 0)
@@ -44,11 +45,14 @@ class MainActivity : AppCompatActivity(), DiceColorAdapter.DiceColorListener {
         setTheme(styleSettings.theme)
         needToAutoClean = preferences.getBoolean(GlobalSettingsDictionary.NEED_TO_CLEAN, false)
 
+        //Заполнение активити
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.apply {
+            basicLayout.setBackgroundResource(styleSettings.backgroundLinc)
+            leftMenu.setBackgroundResource(styleSettings.backgroundLinc)
             if (needToAutoClean) clearResult.visibility = View.GONE else clearResult.visibility =
                 View.VISIBLE
 

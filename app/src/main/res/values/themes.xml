@@ -13,7 +13,6 @@
         <!-- Customize your theme here. -->
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
-        <item name="android:background">@drawable/green_grace</item>
         <item name="android:textViewStyle">@style/TextForGreenGrace</item>
         <item name="textAppearanceButton">@style/TextForGreenGrace</item>
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
@@ -23,7 +22,6 @@
     <style name="Theme.ForGreenWood" parent="Theme.DiceAndCoinBasic">
         <item name="colorPrimary">@color/primary_for_green_wood</item>
         <item name="colorOnPrimary">@color/on_primary_for_green_wood</item>
-        <item name="android:background">@drawable/green_wood</item>
         <item name="android:textViewStyle">@style/TextForGreenWood</item>
         <item name="textAppearanceButton">@style/TextForGreenWood</item>
     </style>
@@ -31,7 +29,6 @@
     <style name="Theme.ForPlitka" parent="Theme.DiceAndCoinBasic">
         <item name="colorPrimary">@color/primary_for_plitka</item>
         <item name="colorOnPrimary">@color/on_primary_for_plitka</item>
-        <item name="android:background">@drawable/plitka</item>
         <item name="android:textViewStyle">@style/TextForPlitka</item>
         <item name="textAppearanceButton">@style/TextForPlitka</item>
     </style>
@@ -39,7 +36,6 @@
     <style name="Theme.ForSquares" parent="Theme.DiceAndCoinBasic">
         <item name="colorPrimary">@color/primary_for_squares</item>
         <item name="colorOnPrimary">@color/on_primary_for_squares</item>
-        <item name="android:background">@drawable/squares</item>
         <item name="android:textViewStyle">@style/TextForSquares</item>
         <item name="textAppearanceButton">@style/TextForSquares</item>
     </style>
@@ -47,7 +43,6 @@
     <style name="Theme.ForTextaile" parent="Theme.DiceAndCoinBasic">
         <item name="colorPrimary">@color/primary_for_textaile</item>
         <item name="colorOnPrimary">@color/on_primary_for_textaile</item>
-        <item name="android:background">@drawable/textaile</item>
         <item name="android:textViewStyle">@style/TextForTextaile</item>
         <item name="textAppearanceButton">@style/TextForTextaile</item>
     </style>
@@ -55,7 +50,6 @@
     <style name="Theme.ForWhiteWoodA" parent="Theme.DiceAndCoinBasic">
         <item name="colorPrimary">@color/primary_for_white_wood_a</item>
         <item name="colorOnPrimary">@color/on_primary_for_white_wood_a</item>
-        <item name="android:background">@drawable/white_wood_a</item>
         <item name="android:textViewStyle">@style/TextForWhiteWoodA</item>
         <item name="textAppearanceButton">@style/TextForWhiteWoodA</item>
     </style>
@@ -63,7 +57,6 @@
     <style name="Theme.ForWhiteWoodB" parent="Theme.DiceAndCoinBasic">
         <item name="colorPrimary">@color/primary_for_white_wood_b</item>
         <item name="colorOnPrimary">@color/on_primary_for_white_wood_b</item>
-        <item name="android:background">@drawable/white_wood_b</item>
         <item name="android:textViewStyle">@style/TextForWhiteWoodB</item>
         <item name="textAppearanceButton">@style/TextForWhiteWoodB</item>
     </style>
@@ -71,7 +64,6 @@
     <style name="Theme.ForWhiteWoodC" parent="Theme.DiceAndCoinBasic">
         <item name="colorPrimary">@color/primary_for_white_wood_c</item>
         <item name="colorOnPrimary">@color/on_primary_for_white_wood_c</item>
-        <item name="android:background">@drawable/white_wood_c</item>
         <item name="android:textViewStyle">@style/TextForWhiteWoodC</item>
         <item name="textAppearanceButton">@style/TextForWhiteWoodC</item>
     </style>
@@ -79,7 +71,6 @@
     <style name="Theme.ForWood" parent="Theme.DiceAndCoinBasic">
         <item name="colorPrimary">@color/primary_for_wood</item>
         <item name="colorOnPrimary">@color/on_primary_for_wood</item>
-        <item name="android:background">@drawable/wood</item>
         <item name="android:textViewStyle">@style/TextForWood</item>
         <item name="textAppearanceButton">@style/TextForWood</item>
     </style>

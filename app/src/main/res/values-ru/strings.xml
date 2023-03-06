@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Монеты и Кубы</string>
+    <string name="dice_type">Тип куба</string>
+    <string name="num_of_dice">Количество кубов</string>
+    <string name="combine">Объединять?</string>
+    <string name="throw_dice">Бросок</string>
+    <string name="settings">Настройки</string>
+    <string name="sort">Сортировать?</string>
+    <string name="table_settings">Настройки стола</string>
+    <string name="style_settings">Внешний вид</string>
+    <string name="text_for_example">Пример текста</string>
+    <string name="button_example">Пример</string>
+    <string name="show">Показать</string>
+    <string name="cleanerText">Убирать результаты</string>
+    <string name="dice_color">Цвет кубов</string>
+    <string-array name="dice_values">
+        <item>Монета</item>
+        <item>Д4</item>
+        <item>Д6</item>
+        <item>Д8</item>
+        <item>Д10</item>
+        <item>Д12</item>
+        <item>Д16</item>
+        <item>Д20</item>
+    </string-array>
+</resources>

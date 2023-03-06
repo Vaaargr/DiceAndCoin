@@ -19,7 +19,6 @@ class DiceEngine(
         val result = IntArray(numOfDice)
         val currentDice = DICE_MAP[DICE_TYPES[diceType]]!!.clone()
         for (i in result.indices) {
-            //0currentDice.shuffle()
             result[i] = currentDice[(Math.random() * currentDice.size).toInt()]
         }
         if (needToSort) result.sort()
