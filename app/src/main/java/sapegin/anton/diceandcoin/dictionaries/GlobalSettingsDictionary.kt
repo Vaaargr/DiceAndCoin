@@ -69,7 +69,4 @@ object GlobalSettingsDictionary {
             8
         )
     )
-
-    val STYLE_SETTINGS = "style settings"
-    val NEED_TO_CLEAN = "need to clean"
 }

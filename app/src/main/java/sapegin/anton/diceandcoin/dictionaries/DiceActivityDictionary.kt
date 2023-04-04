@@ -36,5 +36,6 @@ object DiceActivityDictionary {
     const val SAVED_RESULT = "saved result"
     const val COLUMNS = "number of columns"
     const val NEED_TO_LOAD = "need to load"
-
+    const val STYLE_SETTING_POSITION = "style setting position"
+    const val NEED_TO_CLEAN = "need to clean"
 }

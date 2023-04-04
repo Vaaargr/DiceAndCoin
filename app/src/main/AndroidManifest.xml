@@ -16,7 +16,7 @@
             android:name=".activity.TableSetting"
             android:exported="false"
             android:theme="@style/GlobalSettings"
-            android:screenOrientation="portrait">
+            android:screenOrientation="sensor">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -24,7 +24,7 @@
         <activity
             android:name=".activity.MainActivity"
             android:exported="true"
-            android:screenOrientation="portrait">
+            android:screenOrientation="sensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -40,5 +40,5 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
-    <uses-permission android:name="android.permission.INTERNET" />
+
 </manifest>

@@ -16,7 +16,6 @@ class DiceAdapter : RecyclerView.Adapter<DiceAdapter.DiceHolder>() {
     class DiceHolder(item: View) : RecyclerView.ViewHolder(item) {
         private val binding = DiceResultBinding.bind(item)
 
-
         fun bind(dice: Dice) = with(binding) {
             Picasso.get().load(dice.diceImage).error(R.drawable.six)
                 .into(diceResult)

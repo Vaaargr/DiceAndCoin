@@ -79,6 +79,7 @@
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
+       <!-- <item name="android:windowCloseOnTouchOutside">false</item>-->
     </style>
 
 </resources>

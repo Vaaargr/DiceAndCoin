@@ -1,14 +1,12 @@
-package sapegin.anton.diceandcoin.models
+package sapegin.anton.diceandcoin.logic
 
 
-import sapegin.anton.diceandcoin.dictionaries.DiceActivityDictionary.DICE_COLOR
 import sapegin.anton.diceandcoin.dictionaries.DiceActivityDictionary.DICE_MAP
 import sapegin.anton.diceandcoin.dictionaries.DiceActivityDictionary.DICE_TYPES
-import java.util.concurrent.ThreadLocalRandom
-import kotlin.random.Random
+import sapegin.anton.diceandcoin.models.Dice
 
 
-class DiceEngine(
+class DiceFactory(
     private val diceType: Int,
     private val numOfDice: Int,
     private val needToSort: Boolean,

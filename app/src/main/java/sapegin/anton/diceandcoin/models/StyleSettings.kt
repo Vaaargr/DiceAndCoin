@@ -1,6 +1,6 @@
 package sapegin.anton.diceandcoin.models
 
-class StyleSettings(
+data class StyleSettings(
     val backgroundLinc: Int,
     val textStyle: Int,
     val buttonDraw: Int,
