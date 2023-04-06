@@ -1,16 +1,11 @@
 package sapegin.anton.diceandcoin.activity
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.ActivityResultCallback
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProvider
@@ -24,11 +19,9 @@ import sapegin.anton.diceandcoin.models.Dice
 import sapegin.anton.diceandcoin.models.DiceColor
 import sapegin.anton.diceandcoin.logic.DiceFactory
 import sapegin.anton.diceandcoin.viewModel.MainViewModel
-import sapegin.anton.diceandcoin.viewModel.MainViewModelFactory
 
 class MainActivity : AppCompatActivity(), DiceColorAdapter.DiceColorListener {
     private lateinit var binding: ActivityMainBinding
-    private lateinit var preferences: SharedPreferences
     private lateinit var viewModel: MainViewModel
     private val diceAdapter = DiceAdapter()
     private val colorAdapter = DiceColorAdapter(this)
@@ -50,7 +43,7 @@ class MainActivity : AppCompatActivity(), DiceColorAdapter.DiceColorListener {
         if (newStyleSettingsPosition != viewModel.getStyleSettings().position) {
             updateStyleSettings(newStyleSettingsPosition)
         }
-        if (newAutoCleanFlag != viewModel.getAutoCleanFlag()){
+        if (newAutoCleanFlag != viewModel.getAutoCleanFlag()) {
             updateAutoCleanFlag(newAutoCleanFlag)
         }
 
@@ -61,11 +54,7 @@ class MainActivity : AppCompatActivity(), DiceColorAdapter.DiceColorListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         //Подготовка данных
-        preferences = getSharedPreferences("settings", Context.MODE_PRIVATE)
-        viewModel = ViewModelProvider(
-            this,
-            MainViewModelFactory(preferences)
-        ).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         setTheme(viewModel.getStyleSettings().theme)
 

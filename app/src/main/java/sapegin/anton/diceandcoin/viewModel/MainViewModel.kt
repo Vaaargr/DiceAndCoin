@@ -1,14 +1,18 @@
 package sapegin.anton.diceandcoin.viewModel
 
+import android.app.Application
+import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.AndroidViewModel
 import sapegin.anton.diceandcoin.dictionaries.DiceActivityDictionary
 import sapegin.anton.diceandcoin.dictionaries.GlobalSettingsDictionary
 import sapegin.anton.diceandcoin.models.StyleSettings
 
-class MainViewModel(private val preference: SharedPreferences) : ViewModel() {
+class MainViewModel(application: Application): AndroidViewModel(application) {
 
+    private var preference: SharedPreferences =
+        getApplication<Application>().getSharedPreferences("settings", Context.MODE_PRIVATE)
     private var styleSettings: StyleSettings
     private var autoCleanFlag: Boolean
 
