@@ -19,7 +19,6 @@ import sapegin.anton.diceandcoin.viewModel.MainViewModel
 
 class TableSetting : AppCompatActivity(), StyleSettingsAdapter.BackgroundListener {
     lateinit var binding: ActivityTableSettingBinding
-    //private lateinit var preferences: SharedPreferences
     private val adapter = StyleSettingsAdapter(this)
     private var styleSettingsPosition = 0
     private var autoCleanFlag = false
@@ -27,8 +26,6 @@ class TableSetting : AppCompatActivity(), StyleSettingsAdapter.BackgroundListene
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         //Подготовка данных
-        //preferences = getSharedPreferences("settings", Context.MODE_PRIVATE)
-
         super.onCreate(savedInstanceState)
 
         binding = ActivityTableSettingBinding.inflate(layoutInflater)

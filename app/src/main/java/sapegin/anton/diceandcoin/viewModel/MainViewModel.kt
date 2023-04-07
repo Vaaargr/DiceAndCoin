@@ -5,21 +5,22 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
+import sapegin.anton.diceandcoin.controllers.SharedPreferencesController
 import sapegin.anton.diceandcoin.dictionaries.DiceActivityDictionary
 import sapegin.anton.diceandcoin.dictionaries.GlobalSettingsDictionary
 import sapegin.anton.diceandcoin.models.StyleSettings
 
-class MainViewModel(application: Application): AndroidViewModel(application) {
+class MainViewModel(application: Application) : AndroidViewModel(application) {
 
-    private var preference: SharedPreferences =
-        getApplication<Application>().getSharedPreferences("settings", Context.MODE_PRIVATE)
+    private val preferencesController: SharedPreferencesController
     private var styleSettings: StyleSettings
     private var autoCleanFlag: Boolean
 
     init {
+        preferencesController = SharedPreferencesController(application)
         val styleSettingsPosition =
-            preference.getInt(DiceActivityDictionary.STYLE_SETTING_POSITION, 0)
-        autoCleanFlag = preference.getBoolean(DiceActivityDictionary.NEED_TO_CLEAN, false)
+            preferencesController.getInt(DiceActivityDictionary.STYLE_SETTING_POSITION)
+        autoCleanFlag = preferencesController.getBoolean(DiceActivityDictionary.NEED_TO_CLEAN)
         styleSettings = GlobalSettingsDictionary.themes[styleSettingsPosition]
         Log.d("MyLog", "MainViewModel create")
     }
@@ -28,26 +29,27 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
         return styleSettings
     }
 
-    fun getAutoCleanFlag(): Boolean{
+    fun getAutoCleanFlag(): Boolean {
         return autoCleanFlag
     }
 
-    private fun saveStyleSettingsPosition(styleSettingsPosition: Int) {
-        preference.edit()
-            .putInt(DiceActivityDictionary.STYLE_SETTING_POSITION, styleSettingsPosition).apply()
+    private fun saveStyleSettingsPosition() {
+        preferencesController.saveInt(
+            DiceActivityDictionary.STYLE_SETTING_POSITION,
+            styleSettings.position
+        )
     }
 
-    private fun saveAutoCleanFlag(){
-        preference.edit()
-            .putBoolean(DiceActivityDictionary.NEED_TO_CLEAN, autoCleanFlag).apply()
+    private fun saveAutoCleanFlag() {
+        preferencesController.saveBoolean(DiceActivityDictionary.NEED_TO_CLEAN, autoCleanFlag)
     }
 
     fun changeStyleSettings(styleSettings: StyleSettings) {
         this.styleSettings = styleSettings
-        saveStyleSettingsPosition(styleSettings.position)
+        saveStyleSettingsPosition()
     }
 
-    fun changeAutoCleanFlag(autoCleanFlag: Boolean){
+    fun changeAutoCleanFlag(autoCleanFlag: Boolean) {
         this.autoCleanFlag = autoCleanFlag
         saveAutoCleanFlag()
     }
