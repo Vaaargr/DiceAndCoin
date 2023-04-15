@@ -15,9 +15,7 @@ import sapegin.anton.diceandcoin.adapters.DiceAdapter
 import sapegin.anton.diceandcoin.adapters.DiceColorAdapter
 import sapegin.anton.diceandcoin.databinding.ActivityMainBinding
 import sapegin.anton.diceandcoin.dictionaries.GlobalSettingsDictionary
-import sapegin.anton.diceandcoin.models.Dice
 import sapegin.anton.diceandcoin.models.DiceColor
-import sapegin.anton.diceandcoin.logic.DiceFactory
 import sapegin.anton.diceandcoin.viewModel.MainViewModel
 
 class MainActivity : AppCompatActivity(), DiceColorAdapter.DiceColorListener {
@@ -25,11 +23,7 @@ class MainActivity : AppCompatActivity(), DiceColorAdapter.DiceColorListener {
     private lateinit var viewModel: MainViewModel
     private val diceAdapter = DiceAdapter()
     private val colorAdapter = DiceColorAdapter(this)
-    private var diceTypeNum = 2
-    private var needToCombine = false
-    private var needToSort = false
     private var columns = 1
-    private var currentDiceColor = DiceActivityDictionary.DICE_COLOR[0]
 
     private val globalSettingStartActivityForResult = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -55,7 +49,6 @@ class MainActivity : AppCompatActivity(), DiceColorAdapter.DiceColorListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         //Подготовка данных
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-
         setTheme(viewModel.getStyleSettings().theme)
 
         //Заполнение активити
@@ -70,39 +63,47 @@ class MainActivity : AppCompatActivity(), DiceColorAdapter.DiceColorListener {
 
             setCleanVisibility(viewModel.getAutoCleanFlag())
 
+            //Подключение адаптеров
             result.adapter = diceAdapter
-            diceType.setSelection(2)
-
-            //Обработка выбора цвета
             colorChouse.adapter = colorAdapter
             colorChouse.layoutManager = GridLayoutManager(
                 this@MainActivity,
-                getColumnNumbs(DiceActivityDictionary.DICE_COLOR.size)
+                3
             )
             colorAdapter.addResult(DiceActivityDictionary.DICE_COLOR)
 
-            //Выгрузка результатов броска из интента при смене стиля
+            //Подготовка старых настроек броска
+            diceType.setSelection(viewModel.getDiceType())
+            numOfDice.setText(viewModel.getNumOfDice().toString())
+            showColorsButton.setBackgroundResource(viewModel.getDiceColorButton())
+            needToSort.isChecked = viewModel.getNeedToSort()
+            needToCombine.isChecked = viewModel.getNeedToCombine()
+
+
+            /*//Выгрузка результатов броска из интента при смене стиля
             val needToLoad = intent.getBooleanExtra(DiceActivityDictionary.NEED_TO_LOAD, false)
             if (needToLoad) {
                 columns = intent.getIntExtra(DiceActivityDictionary.COLUMNS, 1)
                 result.layoutManager = GridLayoutManager(this@MainActivity, columns)
                 diceAdapter.addResults(intent.getSerializableExtra(DiceActivityDictionary.SAVED_RESULT) as ArrayList<Dice>)
-            }
+            }*/
 
             //Создание слушателей
-            sort.setOnCheckedChangeListener { buttonView, isChecked -> needToSort = isChecked }
-
-            combine.setOnCheckedChangeListener { buttonView, isChecked ->
-                needToCombine = isChecked
-            }
-
             diceType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
                 override fun onItemSelected(
                     parent: AdapterView<*>?, view: View?, position: Int, id: Long
                 ) {
-                    diceTypeNum = position
+                    viewModel.changeDiceType(position)
                 }
+            }
+
+            needToSort.setOnCheckedChangeListener { _, isChecked ->
+                viewModel.changeNeedToSort(isChecked)
+            }
+
+            needToCombine.setOnCheckedChangeListener { _, isChecked ->
+                viewModel.changeNeedToCombine(isChecked)
             }
 
             settingsButton.setOnClickListener {
@@ -155,18 +156,16 @@ class MainActivity : AppCompatActivity(), DiceColorAdapter.DiceColorListener {
 
     private fun onClickThrow() {
         if (viewModel.getAutoCleanFlag()) diceAdapter.clearResult()
+
         val diceNumber =
             if (binding.numOfDice.text.toString()
                     .isNotEmpty()
             ) binding.numOfDice.text.toString()
                 .toInt() else 1
-        val engine =
-            DiceFactory(diceTypeNum, diceNumber, needToSort, currentDiceColor.colorName)
-        val resultToShow = if (!needToCombine) {
-            engine.makeDiceResultWithoutCombine()
-        } else {
-            engine.makeDiceResultCombine()
-        }
+        viewModel.changeNumOfDice(diceNumber)
+
+        val resultToShow = viewModel.getResult()
+
         if (diceAdapter.getDiceList().size < 1) {
             binding.result.layoutManager =
                 GridLayoutManager(this, getColumnNumbs(resultToShow.size))
@@ -206,7 +205,7 @@ class MainActivity : AppCompatActivity(), DiceColorAdapter.DiceColorListener {
     override fun onClick(diceColor: DiceColor) {
         if (diceColor.colorName != "none") {
             binding.colorChouse.visibility = View.GONE
-            currentDiceColor = diceColor
+            viewModel.changeDiceColorPosition(diceColor.diceColorPosition)
             binding.showColorsButton.setBackgroundResource(diceColor.button)
         }
     }

@@ -6,6 +6,8 @@ import androidx.lifecycle.AndroidViewModel
 import sapegin.anton.diceandcoin.controllers.SharedPreferencesController
 import sapegin.anton.diceandcoin.dictionaries.DiceActivityDictionary
 import sapegin.anton.diceandcoin.dictionaries.GlobalSettingsDictionary
+import sapegin.anton.diceandcoin.logic.DiceFactory
+import sapegin.anton.diceandcoin.models.Dice
 import sapegin.anton.diceandcoin.models.StyleSettings
 import sapegin.anton.diceandcoin.models.ThrowSettings
 
@@ -30,6 +32,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             preferencesController.getBoolean(DiceActivityDictionary.NEED_TO_SORT),
             preferencesController.getBoolean(DiceActivityDictionary.NEED_TO_COMBINE)
         )
+        DiceFactory.setThrowSettings(throwSettings)
     }
 
     fun getStyleSettings() = styleSettings
@@ -45,6 +48,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     fun getNeedToSort() = throwSettings.needToSort
 
     fun getNeedToCombine() = throwSettings.needToCombine
+
+    fun getDiceColorButton() =
+        DiceActivityDictionary.DICE_COLOR[throwSettings.diceColorPosition].button
 
     private fun saveStyleSettingsPosition() = preferencesController.saveInt(
         DiceActivityDictionary.STYLE_SETTING_POSITION,
@@ -108,5 +114,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     fun changeNeedToCombine(needToCombine: Boolean) {
         throwSettings.needToCombine = needToCombine
         saveNeedToCombine()
+    }
+
+    fun getResult(): ArrayList<Dice>{
+        return if(throwSettings.needToCombine){
+            DiceFactory.makeDiceResultCombine()
+        } else{
+            DiceFactory.makeDiceResultWithoutCombine()
+        }
     }
 }

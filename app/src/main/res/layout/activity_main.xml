@@ -203,7 +203,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
         <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/sort"
+            android:id="@+id/need_to_sort"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:layout_marginStart="10dp"
@@ -214,14 +214,14 @@
             app:layout_constraintTop_toTopOf="@+id/textView5" />
 
         <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/combine"
+            android:id="@+id/need_to_combine"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:checked="false"
             android:minHeight="48dp"
             app:layout_constraintBottom_toBottomOf="@+id/textView6"
-            app:layout_constraintEnd_toEndOf="@+id/sort"
-            app:layout_constraintStart_toStartOf="@+id/sort"
+            app:layout_constraintEnd_toEndOf="@+id/need_to_sort"
+            app:layout_constraintStart_toStartOf="@+id/need_to_sort"
             app:layout_constraintTop_toTopOf="@+id/textView6" />
 
         <TextView
