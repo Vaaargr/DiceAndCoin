@@ -1,8 +1,6 @@
 package sapegin.anton.diceandcoin.activity
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -15,7 +13,6 @@ import sapegin.anton.diceandcoin.databinding.ActivityTableSettingBinding
 import sapegin.anton.diceandcoin.dictionaries.DiceActivityDictionary
 import sapegin.anton.diceandcoin.dictionaries.GlobalSettingsDictionary
 import sapegin.anton.diceandcoin.models.StyleSettings
-import sapegin.anton.diceandcoin.viewModel.MainViewModel
 
 class TableSetting : AppCompatActivity(), StyleSettingsAdapter.BackgroundListener {
     lateinit var binding: ActivityTableSettingBinding

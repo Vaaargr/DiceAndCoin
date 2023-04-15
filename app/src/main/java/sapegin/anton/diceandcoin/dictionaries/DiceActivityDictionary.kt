@@ -38,4 +38,9 @@ object DiceActivityDictionary {
     const val NEED_TO_LOAD = "need to load"
     const val STYLE_SETTING_POSITION = "style setting position"
     const val NEED_TO_CLEAN = "need to clean"
+    const val DICE_TYPE = "dice type"
+    const val NUM_OF_DICE = "num of dice"
+    const val NEED_TO_SORT = "need to sort"
+    const val NEED_TO_COMBINE = "need to combine"
+    const val DICE_COLOR_POSITION = "dice color position"
 }
